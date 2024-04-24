@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AvTripRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,35 @@ class AvTrip
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $finish = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?AvUser $AvUser = null;
+
+    /**
+     * @var Collection<int, AvCategory>
+     */
+    #[ORM\ManyToMany(targetEntity: AvCategory::class)]
+    private Collection $AvCategory;
+
+    /**
+     * @var Collection<int, AvCountry>
+     */
+    #[ORM\ManyToMany(targetEntity: AvCountry::class)]
+    private Collection $AvCountry;
+
+    /**
+     * @var Collection<int, AvReservation>
+     */
+    #[ORM\OneToMany(targetEntity: AvReservation::class, mappedBy: 'TripId')]
+    private Collection $AvReservation;
+
+    public function __construct()
+    {
+        $this->AvCategory = new ArrayCollection();
+        $this->AvCountry = new ArrayCollection();
+        $this->AvReservation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +136,96 @@ class AvTrip
     public function setFinish(\DateTimeInterface $finish): static
     {
         $this->finish = $finish;
+
+        return $this;
+    }
+
+    public function getAvUser(): ?AvUser
+    {
+        return $this->AvUser;
+    }
+
+    public function setAvUser(?AvUser $AvUser): static
+    {
+        $this->AvUser = $AvUser;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AvCategory>
+     */
+    public function getAvCategory(): Collection
+    {
+        return $this->AvCategory;
+    }
+
+    public function addAvCategory(AvCategory $avCategory): static
+    {
+        if (!$this->AvCategory->contains($avCategory)) {
+            $this->AvCategory->add($avCategory);
+        }
+
+        return $this;
+    }
+
+    public function removeAvCategory(AvCategory $avCategory): static
+    {
+        $this->AvCategory->removeElement($avCategory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AvCountry>
+     */
+    public function getAvCountry(): Collection
+    {
+        return $this->AvCountry;
+    }
+
+    public function addAvCountry(AvCountry $avCountry): static
+    {
+        if (!$this->AvCountry->contains($avCountry)) {
+            $this->AvCountry->add($avCountry);
+        }
+
+        return $this;
+    }
+
+    public function removeAvCountry(AvCountry $avCountry): static
+    {
+        $this->AvCountry->removeElement($avCountry);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AvReservation>
+     */
+    public function getAvReservation(): Collection
+    {
+        return $this->AvReservation;
+    }
+
+    public function addAvReservation(AvReservation $avReservation): static
+    {
+        if (!$this->AvReservation->contains($avReservation)) {
+            $this->AvReservation->add($avReservation);
+            $avReservation->setTripId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvReservation(AvReservation $avReservation): static
+    {
+        if ($this->AvReservation->removeElement($avReservation)) {
+            // set the owning side to null (unless already changed)
+            if ($avReservation->getTripId() === $this) {
+                $avReservation->setTripId(null);
+            }
+        }
 
         return $this;
     }

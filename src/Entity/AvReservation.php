@@ -28,6 +28,14 @@ class AvReservation
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $message = null;
 
+    #[ORM\ManyToOne(inversedBy: 'AvReservation')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?AvTrip $TripId = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?AvStatus $AvStatus = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +97,30 @@ class AvReservation
     public function setMessage(?string $message): static
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getTripId(): ?AvTrip
+    {
+        return $this->TripId;
+    }
+
+    public function setTripId(?AvTrip $TripId): static
+    {
+        $this->TripId = $TripId;
+
+        return $this;
+    }
+
+    public function getAvStatus(): ?AvStatus
+    {
+        return $this->AvStatus;
+    }
+
+    public function setAvStatus(?AvStatus $AvStatus): static
+    {
+        $this->AvStatus = $AvStatus;
 
         return $this;
     }
