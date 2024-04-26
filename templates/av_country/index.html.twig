@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AvCountry index{% endblock %}
+
+{% block body %}
+    <h1>AvCountry index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for av_country in av_countries %}
+            <tr>
+                <td>{{ av_country.id }}</td>
+                <td>{{ av_country.name }}</td>
+                <td>
+                    <a href="{{ path('app_av_country_show', {'id': av_country.id}) }}">show</a>
+                    <a href="{{ path('app_av_country_edit', {'id': av_country.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_av_country_new') }}">Create new</a>
+{% endblock %}

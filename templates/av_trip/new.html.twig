@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AvTrip{% endblock %}
+
+{% block body %}
+    <h1>Create new AvTrip</h1>
+
+    {{ include('av_trip/_form.html.twig') }}
+
+    <a href="{{ path('app_av_trip_index') }}">back to list</a>
+{% endblock %}

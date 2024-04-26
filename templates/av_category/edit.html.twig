@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit AvCategory{% endblock %}
+
+{% block body %}
+    <h1>Edit AvCategory</h1>
+
+    {{ include('av_category/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_av_category_index') }}">back to list</a>
+
+    {{ include('av_category/_delete_form.html.twig') }}
+{% endblock %}
