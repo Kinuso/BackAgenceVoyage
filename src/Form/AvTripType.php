@@ -28,19 +28,18 @@ class AvTripType extends AbstractType
             ])
             ->add('AvUser', EntityType::class, [
                 'class' => AvUser::class,
-'choice_label' => 'id',
+                'choice_label' => 'firstname',
             ])
             ->add('AvCategory', EntityType::class, [
                 'class' => AvCategory::class,
-'choice_label' => 'id',
-'multiple' => true,
+                'choice_label' => 'name',
+                'multiple' => true,
             ])
             ->add('AvCountry', EntityType::class, [
                 'class' => AvCountry::class,
-'choice_label' => 'id',
-'multiple' => true,
-            ])
-        ;
+                'choice_label' => 'name',
+                'multiple' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
