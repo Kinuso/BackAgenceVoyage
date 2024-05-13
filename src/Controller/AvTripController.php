@@ -7,18 +7,30 @@ use App\Form\AvTripType;
 use App\Repository\AvTripRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/av/trip')]
 class AvTripController extends AbstractController
 {
+
+
     #[Route('/', name: 'app_av_trip_index', methods: ['GET'])]
     public function index(AvTripRepository $avTripRepository): Response
     {
+        // $securityContext = $this->container->get('security.context');
+        // if (!$securityContext->isGranted('ROLE_ADMIN')) {
+        //     throw new AccessDeniedException('Only an admin can do this!!!!');
+        // }
+
+        $user = $this->getUser();
         return $this->render('av_trip/index.html.twig', [
+
             'av_trips' => $avTripRepository->findAll(),
+            'user' => $user,
         ]);
     }
 
@@ -48,9 +60,10 @@ class AvTripController extends AbstractController
         return $this->render('av_trip/show.html.twig', [
             'av_trip' => $avTrip,
         ]);
-    }
+    }  
 
     #[Route('/{id}/edit', name: 'app_av_trip_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function edit(Request $request, AvTrip $avTrip, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AvTripType::class, $avTrip);
@@ -71,7 +84,7 @@ class AvTripController extends AbstractController
     #[Route('/{id}', name: 'app_av_trip_delete', methods: ['POST'])]
     public function delete(Request $request, AvTrip $avTrip, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$avTrip->getId(), $request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $avTrip->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($avTrip);
             $entityManager->flush();
         }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AvCountryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AvCountryRepository::class)]
 class AvCountry
@@ -14,6 +15,7 @@ class AvCountry
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('api_trips_show')]
     private ?string $name = null;
 
     public function getId(): ?int

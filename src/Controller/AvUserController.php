@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/av/user')]
 class AvUserController extends AbstractController
@@ -71,7 +72,7 @@ class AvUserController extends AbstractController
     #[Route('/{id}', name: 'app_av_user_delete', methods: ['POST'])]
     public function delete(Request $request, AvUser $avUser, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$avUser->getId(), $request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $avUser->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($avUser);
             $entityManager->flush();
         }

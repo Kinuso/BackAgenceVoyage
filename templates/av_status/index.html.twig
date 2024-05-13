@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AvStatus index{% endblock %}
+
+{% block body %}
+    <h1>AvStatus index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for av_status in av_statuses %}
+            <tr>
+                <td>{{ av_status.id }}</td>
+                <td>{{ av_status.name }}</td>
+                <td>
+                    <a href="{{ path('app_av_status_show', {'id': av_status.id}) }}">show</a>
+                    <a href="{{ path('app_av_status_edit', {'id': av_status.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_av_status_new') }}">Create new</a>
+{% endblock %}

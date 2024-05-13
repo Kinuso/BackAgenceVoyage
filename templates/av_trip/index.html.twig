@@ -4,7 +4,6 @@
 
 {% block body %}
     <h1>AvTrip index</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -13,6 +12,7 @@
                 <th>Picture</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th>Crée par</th>
                 <th>Start</th>
                 <th>Finish</th>
                 <th>actions</th>
@@ -23,14 +23,20 @@
             <tr>
                 <td>{{ av_trip.id }}</td>
                 <td>{{ av_trip.name }}</td>
-                <td > <img class="h-32" src="{{ av_trip.picture }}" alt=""></td>
+                <td > <img class="h-32 w-32" src="{{ av_trip.picture }}" alt=""></td>
                 <td>{{ av_trip.description }}</td>
                 <td>{{ av_trip.price }}</td>
+                <td>{{ av_trip.AvUser.firstname }}</td>
                 <td>{{ av_trip.start ? av_trip.start|date('Y-m-d') : '' }}</td>
                 <td>{{ av_trip.finish ? av_trip.finish|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a class="m-8 w-32 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_trip_show', {'id': av_trip.id}) }}">show</a>
+                {% if user.id == av_trip.AvUser.id or is_granted("ROLE_ADMIN")%}
+    
+                      <a class="m-8 w-32 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_trip_show', {'id': av_trip.id}) }}">show</a>
                     <a class=" w-32 text-yellow-700 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-500 dark:text-yellow-500 dark:hover:text-white dark:hover:bg-yellow-600 dark:focus:ring-yellow-800" href="{{ path('app_av_trip_edit', {'id': av_trip.id}) }}">edit</a>
+                    
+                {% endif %}
+                  
                 </td>
             </tr>
         {% else %}
@@ -43,8 +49,6 @@
     <br>
     <div class="flex">
     <a class="w-32 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_trip_new') }}">Create new</a>
-    <a class="w-32 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_category_index') }}">Go to category</a>
-    <a class="w-32 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_country_index') }}">Go to country</a>
     </div>
 
 

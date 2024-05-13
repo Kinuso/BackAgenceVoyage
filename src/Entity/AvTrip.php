@@ -7,31 +7,52 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\NoSuspiciousCharacters;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AvTripRepository::class)]
+#[UniqueEntity('name', message: "Ce nom de voyage est deja utilisé")]
 class AvTrip
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('api_trips_show')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[assert\NotBlank(message: "Veuillez remplir le champ")]
+    #[Assert\NoSuspiciousCharacters(checks: NoSuspiciousCharacters::CHECK_INVISIBLE, restrictionLevel: NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH)]
+    #[assert\Length(min: 5, max: 255, minMessage: "Veuillez entrer un nom plus long", maxMessage: "nom trop long (max 255 caractères)")]
+    #[Groups('api_trips_show')]
     private ?string $name = null;
 
     #[ORM\Column(length: 1000, nullable: true)]
+    #[Assert\NoSuspiciousCharacters(checks: NoSuspiciousCharacters::CHECK_INVISIBLE, restrictionLevel: NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH)]
+    #[assert\Length(max: 1000, maxMessage: "lien trop long (max 1000 caractères)")]
+    #[Groups('api_trips_show')]
     private ?string $picture = null;
 
     #[ORM\Column(length: 1000)]
+    #[assert\NotBlank(message: "Veuillez remplir le champ")]
+    #[Assert\NoSuspiciousCharacters(checks: NoSuspiciousCharacters::CHECK_INVISIBLE, restrictionLevel: NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH)]
+    #[assert\Length(min: 5, max: 1000, minMessage: "Veuillez entrer une description plus longue", maxMessage: "description trop longue (max 1000 caractères)")]
+    #[Groups('api_trips_specific')]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[assert\NotBlank(message: "Veuillez remplir le champ")]
+    #[Groups('api_trips_show')]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups('api_trips_specific')]
     private ?\DateTimeInterface $start = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups('api_trips_specific')]
     private ?\DateTimeInterface $finish = null;
 
     #[ORM\ManyToOne]
@@ -42,12 +63,14 @@ class AvTrip
      * @var Collection<int, AvCategory>
      */
     #[ORM\ManyToMany(targetEntity: AvCategory::class)]
+    #[Groups('api_trips_show')]
     private Collection $AvCategory;
 
     /**
      * @var Collection<int, AvCountry>
      */
     #[ORM\ManyToMany(targetEntity: AvCountry::class)]
+    #[Groups('api_trips_show')]
     private Collection $AvCountry;
 
     /**
