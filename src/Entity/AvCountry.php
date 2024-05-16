@@ -12,10 +12,11 @@ class AvCountry
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['api_trips_show', 'api_miscallineous_show'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('api_trips_show')]
+    #[Groups(['api_trips_show', 'api_miscallineous_show'])]
     private ?string $name = null;
 
     public function getId(): ?int

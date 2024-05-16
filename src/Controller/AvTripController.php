@@ -17,7 +17,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class AvTripController extends AbstractController
 {
 
-
     #[Route('/', name: 'app_av_trip_index', methods: ['GET'])]
     public function index(AvTripRepository $avTripRepository): Response
     {

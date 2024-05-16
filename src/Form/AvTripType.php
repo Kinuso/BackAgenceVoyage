@@ -37,10 +37,14 @@ class AvTripType extends AbstractType
             ->add('finish', null, [
                 'widget' => 'single_text'
             ])
-            ->add('AvUser', HiddenType::class, [
-                'data' => $this->security->getUser() ? $this->security->getUser()->getUserIdentifier() : null,
-                'mapped' => false,
-            ])      
+            // ->add('AvUser', HiddenType::class, [
+            //     'data' => $this->security->getUser() ? $this->security->getUser()->getUserIdentifier() : null,
+            //     'mapped' => false,
+            // ])
+            ->add('AvUser', EntityType::class, [
+                'class' => AvUser::class,
+                'choice_label' => 'firstname',
+            ])
             ->add('AvCategory', EntityType::class, [
                 'class' => AvCategory::class,
                 'choice_label' => 'name',
