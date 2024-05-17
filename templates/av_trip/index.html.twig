@@ -31,8 +31,8 @@
                 <td>{{ av_trip.finish ? av_trip.finish|date('Y-m-d') : '' }}</td>
                 <td>
                 {% if user.id == av_trip.AvUser.id or is_granted("ROLE_ADMIN")%}
-                    <button>Bouton editer</button>
-                    <button>Bouton Supprimer</button>                    
+                    <a href="{{ path('app_av_trip_show', {'id': av_trip.id}) }}">show</a>
+                    <a href="{{ path('app_av_trip_edit', {'id': av_trip.id}) }}">edit</a>                 
                 {% endif %}
                   
                 </td>
