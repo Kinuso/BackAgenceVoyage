@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method AvCategory|null findOneBy(array $criteria, array $orderBy = null)
  * @method AvCategory[]    findAll()
  * @method AvCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
+ */ 
 class AvCategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

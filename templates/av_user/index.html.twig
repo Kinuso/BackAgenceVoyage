@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AvUser index{% endblock %}
+
+{% block body %}
+    <h1>AvUser index</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for av_user in av_users %}
+            <tr>
+                <td>{{ av_user.id }}</td>
+                <td>{{ av_user.email }}</td>
+                <td>{{ av_user.roles ? av_user.roles|json_encode : '' }}</td>
+                <td>{{ av_user.firstname }}</td>
+                <td>{{ av_user.lastname }}</td>
+                <td>
+                    <a href="{{ path('app_av_user_show', {'id': av_user.id}) }}">show</a>
+                    <a href="{{ path('app_av_user_edit', {'id': av_user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_av_user_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AvTrip index{% endblock %}
+
+{% block body %}
+    <h1>AvTrip index</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Picture</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Crée par</th>
+                <th>Start</th>
+                <th>Finish</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for av_trip in av_trips %}
+            <tr>
+                <td>{{ av_trip.id }}</td>
+                <td>{{ av_trip.name }}</td>
+                <td > <img class="h-32 w-32" src="{{ av_trip.picture }}" alt=""></td>
+                <td>{{ av_trip.description }}</td>
+                <td>{{ av_trip.price }}</td>
+                <td>{{ av_trip.AvUser.firstname }}</td>
+                <td>{{ av_trip.start ? av_trip.start|date('Y-m-d') : '' }}</td>
+                <td>{{ av_trip.finish ? av_trip.finish|date('Y-m-d') : '' }}</td>
+                <td>
+                {% if user.id == av_trip.AvUser.id or is_granted("ROLE_ADMIN")%}
+                    <a href="{{ path('app_av_trip_show', {'id': av_trip.id}) }}">show</a>
+                    <a href="{{ path('app_av_trip_edit', {'id': av_trip.id}) }}">edit</a>                 
+                {% endif %}
+                  
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <div class="flex">
+    <a class="w-32 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_trip_new') }}">Create new</a>
+    </div>
+
+
+{% endblock %}

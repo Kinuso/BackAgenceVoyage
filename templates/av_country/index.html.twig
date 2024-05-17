@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AvCountry index{% endblock %}
+
+{% block body %}
+    <h1>AvCountry index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for av_country in av_countries %}
+            <tr>
+                <td>{{ av_country.id }}</td>
+                <td>{{ av_country.name }}</td>
+                <td>
+                    <a href="{{ path('app_av_country_show', {'id': av_country.id}) }}">show</a>
+                    <a href="{{ path('app_av_country_edit', {'id': av_country.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="w-2/12 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_country_new') }}">Create new</a>
+    <a class="w-2/12 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800" href="{{ path('app_av_trip_index') }}">Go to trip</a>
+
+{% endblock %}
