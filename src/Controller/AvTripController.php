@@ -20,11 +20,6 @@ class AvTripController extends AbstractController
     #[Route('/', name: 'app_av_trip_index', methods: ['GET'])]
     public function index(AvTripRepository $avTripRepository): Response
     {
-        // $securityContext = $this->container->get('security.context');
-        // if (!$securityContext->isGranted('ROLE_ADMIN')) {
-        //     throw new AccessDeniedException('Only an admin can do this!!!!');
-        // }
-
         $user = $this->getUser();
         return $this->render('av_trip/index.html.twig', [
 
@@ -62,7 +57,7 @@ class AvTripController extends AbstractController
     }  
 
     #[Route('/{id}/edit', name: 'app_av_trip_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(['ROLE_EDITEUR','ROLE_ADMIN'])]
     public function edit(Request $request, AvTrip $avTrip, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AvTripType::class, $avTrip);

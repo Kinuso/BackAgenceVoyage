@@ -24,13 +24,13 @@ class AvTrip
 
     #[ORM\Column(length: 255)]
     #[assert\NotBlank(message: "Veuillez remplir le champ")]
-    #[Assert\NoSuspiciousCharacters(checks: NoSuspiciousCharacters::CHECK_INVISIBLE, restrictionLevel: NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH)]
+    #[assert\NoSuspiciousCharacters(checks: NoSuspiciousCharacters::CHECK_INVISIBLE, restrictionLevel: NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH)]
     #[assert\Length(min: 5, max: 255, minMessage: "Veuillez entrer un nom plus long", maxMessage: "nom trop long (max 255 caractères)")]
     #[Groups(['api_trips_show', 'api_trips_category_show'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 1000, nullable: true)]
-    #[Assert\NoSuspiciousCharacters(checks: NoSuspiciousCharacters::CHECK_INVISIBLE, restrictionLevel: NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH)]
+    #[assert\NoSuspiciousCharacters(checks: NoSuspiciousCharacters::CHECK_INVISIBLE, restrictionLevel: NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH)]
     #[assert\Length(max: 1000, maxMessage: "lien trop long (max 1000 caractères)")]
     #[Groups(['api_trips_show', 'api_trips_category_show'])]
     private ?string $picture = null;
